@@ -21,6 +21,10 @@ struct Cli {
 
     /// What to prepend to the new sequence names
     seq_name_prefix: String,
+
+    /// Strip the gaps before collapsing
+    #[arg(long, short)]
+    strip_gaps: bool
 }
 
 fn main() {
@@ -38,12 +42,14 @@ fn main() {
         let record = result.expect("Issue getting the record from the result.");
 
         let record_id = record.id();
-        let record_seq = record.seq();
+        let mut record_seq = record.seq().to_vec();
 
-
+        if cli.strip_gaps{
+            record_seq.retain(|&val| val != 45); // 45 is the value of -
+        }
 
         unique_sequences
-            .entry(record_seq.to_owned())
+            .entry(record_seq)
             .and_modify(| seq_name_vec| seq_name_vec.push(record_id.to_owned()))
             .or_insert(vec![record_id.to_owned()]);
 
