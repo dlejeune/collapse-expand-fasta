@@ -27,6 +27,7 @@ struct Cli {
     strip_gaps: bool
 }
 
+
 fn main() {
     let cli = Cli::parse();
     simple_logger::SimpleLogger::new().env().init().unwrap();
@@ -64,7 +65,9 @@ fn main() {
 
     log::info!("Writing unique sequences to file {:?}", &cli.output_file_path);
     for (sequence, sequence_names) in &unique_sequences{
-        let seq_name = format!("{}_{:0>4}_{:0>4}_seqs", &cli.seq_name_prefix, counter, sequence_names.len());
+        // This will generate a sequence with a unique int for each collapsed seq, and a count
+        // for the sequences that make up this collapsed one
+        let seq_name = format!("{}_{:0>4}_{:0>4}", &cli.seq_name_prefix, counter, sequence_names.len());
 
         writer.write(&seq_name, None, sequence).expect("Error writing record");
         counter += 1;
