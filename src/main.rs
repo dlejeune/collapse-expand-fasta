@@ -11,15 +11,19 @@ use serde_json;
 #[derive(Parser)]
 struct Cli {
     /// Path to the input file
+    #[arg(long, short)]
     input_file_path: PathBuf,
 
     /// Where to write the output FASTA file
+    #[arg(long, short)]
     output_file_path: PathBuf,
 
     /// Where to write the mapping of new name to old name
+    #[arg(long, short)]
     name_mapping_output_path: PathBuf,
 
     /// What to prepend to the new sequence names
+    #[arg(long, short)]
     seq_name_prefix: String,
 
     /// Strip the gaps before collapsing
