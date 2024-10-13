@@ -23,7 +23,7 @@ struct Cli {
     name_mapping_output_path: PathBuf,
 
     /// What to prepend to the new sequence names
-    #[arg(long, short)]
+    #[arg(long, short='p')]
     seq_name_prefix: String,
 
     /// Strip the gaps before collapsing
